@@ -29,54 +29,35 @@ class TableViewCell: UITableViewCell {
         lbl.text = "Fast"
         lbl.numberOfLines = 0
         return lbl
-   }()
+    }()
     
     let moviewYear: UILabel = {
-         let lbl = UILabel()
-         lbl.translatesAutoresizingMaskIntoConstraints = false
-         lbl.font = UIFont(name: "System", size: 10)
-         lbl.text = "2006"
-         lbl.alpha = 0.7
-         return lbl
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.font = UIFont(name: "System", size: 10)
+        lbl.text = "2006"
+        lbl.alpha = 0.7
+        return lbl
     }()
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
-    func configViews() {
-
-        
-    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(posterImageView)
         contentView.addSubview(moviewYear)
         contentView.addSubview(moviewTitle)
-    
+        
         posterImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         posterImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
         posterImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.35).isActive = true
         posterImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.8).isActive = true
         
-       moviewTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
-       moviewTitle.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 16).isActive = true
+        moviewTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
+        moviewTitle.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 16).isActive = true
         moviewTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 20).isActive = true
         
         moviewYear.topAnchor.constraint(equalTo: moviewTitle.bottomAnchor, constant: 16).isActive = true
         moviewYear.leadingAnchor.constraint(equalTo: moviewTitle.leadingAnchor, constant: 0).isActive = true
         
-        
-
     }
     
     required init?(coder: NSCoder) {

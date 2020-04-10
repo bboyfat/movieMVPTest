@@ -9,7 +9,9 @@
 import UIKit
 
 protocol TVDataSource {
+    
     func refresh(_ movies: [Movies]?)
+    
 }
 
 class TableViewDataSourceManager: NSObject, TVDataSource {
@@ -56,6 +58,5 @@ extension TableViewDataSourceManager: UITableViewDataSource {
         cell.posterImageView.load(movie.poster ?? "")
         return cell
     }
-    
     
 }

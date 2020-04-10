@@ -1,5 +1,5 @@
 //
-//  DetailsController.swift
+//  DetailsView.swift
 //  TestiOSDev
 //
 //  Created by Andrey Petrovskiy on 10.04.2020.
@@ -7,31 +7,6 @@
 //
 
 import UIKit
-
-class DetailsController: UIViewController {
-    
-    var detailView: DetailsView!
-    var movie: Movies?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        detailView = DetailsView(frame: self.view.frame)
-        detailView.backgroundColor = .white
-        self.view.addSubview(detailView)
-        setViews()
-    }
-    
-    func setViews() {
-        detailView.titleLb.text = movie?.title
-        detailView.posterImageView.load(movie?.poster ?? "")
-        detailView.disMissBtn.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
-    }
-    
-    @objc func handleDismiss() {
-        self.dismiss(animated: true, completion: nil)
-    }
-}
-
 
 class DetailsView: UIView {
     
@@ -88,3 +63,4 @@ class DetailsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

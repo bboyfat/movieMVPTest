@@ -10,14 +10,14 @@ import Foundation
 
 protocol MoviesDataManager {
     
-    func fetchMovie(_ completion: @escaping(Data?, Error?) -> ())
+    func fetchMovies(_ completion: @escaping(Data?, Error?) -> ())
     
 }
 
 class MovieDataWorker: MoviesDataManager {
     
-    func fetchMovie(_ completion: @escaping (Data?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: URL(string: Path.baseURL)!) { (data, response, error) in
+    func fetchMovies(_ completion: @escaping (Data?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: Path.baseURL) { (data, response, error) in
             guard error == nil else {completion(nil, error); return}
             completion(data, nil)
         }.resume()

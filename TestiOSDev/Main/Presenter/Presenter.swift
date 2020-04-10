@@ -10,20 +10,21 @@ import Foundation
 
 protocol Presenter {
     func setDelegate(_ delegate: MovieControllerDelegate)
-    func loadData()
+    func getMovies(_ withTitle: String)
     func didSelectMoview(_ index: Int)
 }
 
 
 class MoviesPresenter: Presenter {
+
     
     weak var delegate: MovieControllerDelegate?
     private var dataStorage: MoviesDataManager!
     var movies: [Movies] = []
     
-    
-    func loadData() {
-        dataStorage.fetchMovie() {[weak self] (data, error) in
+    func getMovies(_ withTitle: String) {
+        Path.searchText = withTitle
+        dataStorage.fetchMovies() {[weak self] (data, error) in
             switch error{
             case nil:
                 self?.decodeData(data)
@@ -32,7 +33,7 @@ class MoviesPresenter: Presenter {
             }
         }
     }
-    
+
     func setDelegate(_ delegate: MovieControllerDelegate) {
         self.delegate = delegate
       }

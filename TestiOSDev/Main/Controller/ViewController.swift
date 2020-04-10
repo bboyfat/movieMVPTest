@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 protocol MovieControllerDelegate: class {
     func updateMovies(_ movies: [Movies]?)
     func showError(_ error: String?)
@@ -16,53 +15,50 @@ protocol MovieControllerDelegate: class {
 }
 
 class ViewController: UIViewController, MovieControllerDelegate {
-
-    var model: [Movies] = []
+    
+    var mainView: MainView!
     var moviesPresenter: Presenter!
     var dataSourceManager: TVDataSource!
     
-    let tableView: UITableView = {
-        let tv = UITableView()
-        tv.translatesAutoresizingMaskIntoConstraints = false
-        tv.separatorStyle = .none
-        return tv
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setTableView()
+        configView()
         commonInit()
-        moviesPresenter.loadData()
+        moviesPresenter.getMovies("fast")
     }
     
     private func commonInit() {
         moviesPresenter = MoviesPresenter()
         moviesPresenter.setDelegate(self)
-        dataSourceManager = TableViewDataSourceManager(tableView)
+        dataSourceManager = TableViewDataSourceManager(mainView.tableView)
     }
     
     func updateMovies(_ movies: [Movies]?) {
         dataSourceManager.refresh(movies)
-      }
-      
-      func showError(_ error: String?) {
-          print(error ?? "")
-      }
+    }
+    
+    func showError(_ error: String?) {
+        print(error ?? "")
+    }
     
     func presentMovie(_ movie: Movies) {
         let controller = DetailsController()
         controller.movie = movie
         self.present(controller, animated: true, completion: nil)
-       }
-       
+    }
+    
+    func configView() {
+        mainView = MainView(frame: self.view.frame)
+        self.view.addSubview(mainView)
+        setTableView()
+    }
+    
     func setTableView() {
         self.view.backgroundColor = .white
-        self.tableView.frame = self.view.bounds
-        tableView.delegate = self
-        self.view.addSubview(tableView)
+        self.mainView.tableView.frame = self.view.bounds
+        mainView.tableView.delegate = self
+        mainView.searchView.delegate = self
     }
-
-
     
 }
 
@@ -71,9 +67,19 @@ extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.view.frame.height * 0.2
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         moviesPresenter.didSelectMoview(indexPath.row)
+    }
+    
+}
+
+extension ViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        moviesPresenter.getMovies(searchBar.text ?? "")
+        self.view.endEditing(true)
     }
     
 }
